@@ -1,0 +1,2419 @@
+Installation
+-------------
+Verification:
+
+Table         provided     actual
+----------- ---------- ----------
+regions              5          5
+countries           25         25
+departments         27         27
+locations           23         23
+employees          107        107
+jobs                19         19
+job_history         10         10
+
+Thank you!
+--------------------------------------------------------
+The installation of the sample schema is now finished.
+Please check the installation verification output above.
+
+You will now be disconnected from the database.
+
+Thank you for using Oracle Database!
+
+Disconnected from Oracle Database 21c Enterprise Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+C:\Users\Barbaros>sqlplus SYSTEM/123@orcl3
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Fri Aug 2 14:29:14 2024
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Last Successful login time: Fri Aug 02 2024 14:23:08 +03:00
+
+Connected to:
+Oracle Database 21c Enterprise Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL>
+SQL> -- Connect to the PDB
+SQL> ALTER SESSION SET CONTAINER=ORCLPDB;
+
+Session altered.
+
+SQL>
+SQL> -- Verify HR schema tables
+SQL> SELECT TABLE_NAME FROM ALL_TABLES WHERE OWNER = 'HR';
+
+TABLE_NAME
+--------------------------------------------------------------------------------
+REGIONS
+LOCATIONS
+DEPARTMENTS
+JOBS
+EMPLOYEES
+JOB_HISTORY
+COUNTRIES
+
+7 rows selected.
+
+SQL> SELECT e.EMPLOYEE_ID, e.FIRST_NAME, d.DEPARTMENT_NAME
+  2  FROM HR.EMPLOYEES e
+  3  INNER JOIN HR.DEPARTMENTS d ON e.DEPARTMENT_ID = d.DEPARTMENT_ID;
+
+EMPLOYEE_ID FIRST_NAME           DEPARTMENT_NAME
+----------- -------------------- ------------------------------
+        200 Jennifer             Administration
+        201 Michael              Marketing
+        202 Pat                  Marketing
+        114 Den                  Purchasing
+        115 Alexander            Purchasing
+        116 Shelli               Purchasing
+        117 Sigal                Purchasing
+        118 Guy                  Purchasing
+        119 Karen                Purchasing
+        203 Susan                Human Resources
+        120 Matthew              Shipping
+
+EMPLOYEE_ID FIRST_NAME           DEPARTMENT_NAME
+----------- -------------------- ------------------------------
+        121 Adam                 Shipping
+        122 Payam                Shipping
+        123 Shanta               Shipping
+        124 Kevin                Shipping
+        125 Julia                Shipping
+        126 Irene                Shipping
+        127 James                Shipping
+        128 Steven               Shipping
+        129 Laura                Shipping
+        130 Mozhe                Shipping
+        131 James                Shipping
+
+EMPLOYEE_ID FIRST_NAME           DEPARTMENT_NAME
+----------- -------------------- ------------------------------
+        132 TJ                   Shipping
+        133 Jason                Shipping
+        134 Michael              Shipping
+        135 Ki                   Shipping
+        136 Hazel                Shipping
+        137 Renske               Shipping
+        138 Stephen              Shipping
+        139 John                 Shipping
+        140 Joshua               Shipping
+        141 Trenna               Shipping
+        142 Curtis               Shipping
+
+EMPLOYEE_ID FIRST_NAME           DEPARTMENT_NAME
+----------- -------------------- ------------------------------
+        143 Randall              Shipping
+        144 Peter                Shipping
+        180 Winston              Shipping
+        181 Jean                 Shipping
+        182 Martha               Shipping
+        183 Girard               Shipping
+        184 Nandita              Shipping
+        185 Alexis               Shipping
+        186 Julia                Shipping
+        187 Anthony              Shipping
+        188 Kelly                Shipping
+
+EMPLOYEE_ID FIRST_NAME           DEPARTMENT_NAME
+----------- -------------------- ------------------------------
+        189 Jennifer             Shipping
+        190 Timothy              Shipping
+        191 Randall              Shipping
+        192 Sarah                Shipping
+        193 Britney              Shipping
+        194 Samuel               Shipping
+        195 Vance                Shipping
+        196 Alana                Shipping
+        197 Kevin                Shipping
+        198 Donald               Shipping
+        199 Douglas              Shipping
+
+EMPLOYEE_ID FIRST_NAME           DEPARTMENT_NAME
+----------- -------------------- ------------------------------
+        103 Alexander            IT
+        104 Bruce                IT
+        105 David                IT
+        106 Valli                IT
+        107 Diana                IT
+        204 Hermann              Public Relations
+        145 John                 Sales
+        146 Karen                Sales
+        147 Alberto              Sales
+        148 Gerald               Sales
+        149 Eleni                Sales
+
+EMPLOYEE_ID FIRST_NAME           DEPARTMENT_NAME
+----------- -------------------- ------------------------------
+        150 Sean                 Sales
+        151 David                Sales
+        152 Peter                Sales
+        153 Christopher          Sales
+        154 Nanette              Sales
+        155 Oliver               Sales
+        156 Janette              Sales
+        157 Patrick              Sales
+        158 Allan                Sales
+        159 Lindsey              Sales
+        160 Louise               Sales
+
+EMPLOYEE_ID FIRST_NAME           DEPARTMENT_NAME
+----------- -------------------- ------------------------------
+        161 Sarath               Sales
+        162 Clara                Sales
+        163 Danielle             Sales
+        164 Mattea               Sales
+        165 David                Sales
+        166 Sundar               Sales
+        167 Amit                 Sales
+        168 Lisa                 Sales
+        169 Harrison             Sales
+        170 Tayler               Sales
+        171 William              Sales
+
+EMPLOYEE_ID FIRST_NAME           DEPARTMENT_NAME
+----------- -------------------- ------------------------------
+        172 Elizabeth            Sales
+        173 Sundita              Sales
+        174 Ellen                Sales
+        175 Alyssa               Sales
+        176 Jonathon             Sales
+        177 Jack                 Sales
+        179 Charles              Sales
+        100 Steven               Executive
+        101 Neena                Executive
+        102 Lex                  Executive
+        108 Nancy                Finance
+
+EMPLOYEE_ID FIRST_NAME           DEPARTMENT_NAME
+----------- -------------------- ------------------------------
+        109 Daniel               Finance
+        110 John                 Finance
+        111 Ismael               Finance
+        112 Jose Manuel          Finance
+        113 Luis                 Finance
+        205 Shelley              Accounting
+        206 William              Accounting
+
+106 rows selected.
+
+SQL> SELECT e.EMPLOYEE_ID, e.MANAGER_ID
+  2  FROM HR.EMPLOYEES e;
+
+EMPLOYEE_ID MANAGER_ID
+----------- ----------
+        100
+        101        100
+        102        100
+        103        102
+        104        103
+        105        103
+        106        103
+        107        103
+        108        101
+        109        108
+        110        108
+
+EMPLOYEE_ID MANAGER_ID
+----------- ----------
+        111        108
+        112        108
+        113        108
+        114        100
+        115        114
+        116        114
+        117        114
+        118        114
+        119        114
+        120        100
+        121        100
+
+EMPLOYEE_ID MANAGER_ID
+----------- ----------
+        122        100
+        123        100
+        124        100
+        125        120
+        126        120
+        127        120
+        128        120
+        129        121
+        130        121
+        131        121
+        132        121
+
+EMPLOYEE_ID MANAGER_ID
+----------- ----------
+        133        122
+        134        122
+        135        122
+        136        122
+        137        123
+        138        123
+        139        123
+        140        123
+        141        124
+        142        124
+        143        124
+
+EMPLOYEE_ID MANAGER_ID
+----------- ----------
+        144        124
+        145        100
+        146        100
+        147        100
+        148        100
+        149        100
+        150        145
+        151        145
+        152        145
+        153        145
+        154        145
+
+EMPLOYEE_ID MANAGER_ID
+----------- ----------
+        155        145
+        156        146
+        157        146
+        158        146
+        159        146
+        160        146
+        161        146
+        162        147
+        163        147
+        164        147
+        165        147
+
+EMPLOYEE_ID MANAGER_ID
+----------- ----------
+        166        147
+        167        147
+        168        148
+        169        148
+        170        148
+        171        148
+        172        148
+        173        148
+        174        149
+        175        149
+        176        149
+
+EMPLOYEE_ID MANAGER_ID
+----------- ----------
+        177        149
+        178        149
+        179        149
+        180        120
+        181        120
+        182        120
+        183        120
+        184        121
+        185        121
+        186        121
+        187        121
+
+EMPLOYEE_ID MANAGER_ID
+----------- ----------
+        188        122
+        189        122
+        190        122
+        191        122
+        192        123
+        193        123
+        194        123
+        195        123
+        196        124
+        197        124
+        198        124
+
+EMPLOYEE_ID MANAGER_ID
+----------- ----------
+        199        124
+        200        101
+        201        100
+        202        201
+        203        101
+        204        101
+        205        101
+        206        205
+
+107 rows selected.
+
+SQL> SELECT SUBSTR(PHONE_NUMBER, 1, 3) AS OPERATOR, COUNT(*) AS TOTAL_SUBSCRIBERS
+  2  FROM HR.EMPLOYEES
+  3  GROUP BY SUBSTR(PHONE_NUMBER, 1, 3);
+
+OPERATOR     TOTAL_SUBSCRIBERS
+------------ -----------------
+1.5                         26
+1.6                         46
+44.                         35
+
+SQL> SELECT SUBSTR(PHONE_NUMBER, 1, 3) AS OPERATOR, COUNT(*) AS TOTAL_SUBSCRIBERS
+  2  FROM HR.EMPLOYEES
+  3  GROUP BY SUBSTR(PHONE_NUMBER, 1, 3)
+  4  ORDER BY OPERATOR;
+
+OPERATOR     TOTAL_SUBSCRIBERS
+------------ -----------------
+1.5                         26
+1.6                         46
+44.                         35
+
+SQL> -- Create a new table
+SQL> CREATE TABLE HR.EMP AS SELECT * FROM HR.EMPLOYEES WHERE 1=0;
+
+Table created.
+
+SQL>
+SQL> -- Insert a new row
+SQL> INSERT INTO HR.EMP (EMPLOYEE_ID, FIRST_NAME, LAST_NAME, EMAIL, PHONE_NUMBER, HIRE_DATE, JOB_ID, SALARY, COMMISSION_PCT, MANAGER_ID, DEPARTMENT_ID)
+  2  VALUES (9999, 'Test', 'User', 'testuser@example.com', '555-1234', SYSDATE, 'IT_PROG', 5000, NULL, NULL, 50);
+
+1 row created.
+
+SQL>
+SQL> -- Update the row
+SQL> UPDATE HR.EMP SET PHONE_NUMBER = '555-5678', SALARY = 6000 WHERE EMPLOYEE_ID = 9999;
+
+1 row updated.
+
+SQL>
+SQL> -- Delete the row
+SQL> DELETE FROM HR.EMP WHERE EMPLOYEE_ID = 9999;
+
+1 row deleted.
+
+SQL>
+SQL> -- Drop the table
+SQL> DROP TABLE HR.EMP;
+
+Table dropped.
+
+SQL> SELECT EMPLOYEE_ID,
+  2         RPAD(SUBSTR(FIRST_NAME, 1, 1) || REPEAT('*', LENGTH(FIRST_NAME) - 1), LENGTH(FIRST_NAME), '*') AS FIRST_NAME_MASKED,
+  3         RPAD(SUBSTR(LAST_NAME, 1, 1) || REPEAT('*', LENGTH(LAST_NAME) - 1), LENGTH(LAST_NAME), '*') AS LAST_NAME_MASKED
+  4  FROM HR.EMPLOYEES;
+       RPAD(SUBSTR(LAST_NAME, 1, 1) || REPEAT('*', LENGTH(LAST_NAME) - 1), LENGTH(LAST_NAME), '*') AS LAST_NAME_MASKED
+                                       *
+ERROR at line 3:
+ORA-00904: "REPEAT": invalid identifier
+
+
+SQL> SELECT EMPLOYEE_ID,
+  2         RPAD(SUBSTR(FIRST_NAME, 1, 1) || LPAD('', LENGTH(FIRST_NAME) - 1, '*'), LENGTH(FIRST_NAME), '*') AS FIRST_NAME_MASKED,
+  3         RPAD(SUBSTR(LAST_NAME, 1, 1) || LPAD('', LENGTH(LAST_NAME) - 1, '*'), LENGTH(LAST_NAME), '*') AS LAST_NAME_MASKED
+  4  FROM HR.EMPLOYEES;
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        174
+E****
+A***
+
+        166
+S*****
+A***
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        130
+M****
+A*******
+
+        116
+S*****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+B****
+
+        167
+A***
+B****
+
+        172
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+E********
+B****
+
+        192
+S****
+B***
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        151
+D****
+B********
+
+        129
+L****
+B*****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        169
+H*******
+B****
+
+        204
+H******
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+B****
+
+        185
+A*****
+B***
+
+        187
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+A******
+C*****
+
+        148
+G*****
+C********
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        154
+N******
+C********
+
+        110
+J***
+C***
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        188
+K****
+C****
+
+        119
+K****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+C*********
+
+        142
+C*****
+D*****
+
+        202
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+P**
+D****
+
+        186
+J****
+D********
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        189
+J*******
+D****
+
+        160
+L*****
+D****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        147
+A******
+E********
+
+        193
+B******
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+E******
+
+        109
+D*****
+F*****
+
+        197
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+K****
+F*****
+
+        181
+J***
+F*****
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        170
+T*****
+F**
+
+        121
+A***
+F****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        102
+L**
+G*****
+
+        135
+K*
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+G**
+
+        183
+G*****
+G****
+
+        206
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+W******
+G****
+
+        199
+D******
+G****
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        178
+K********
+G****
+
+        163
+D*******
+G*****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        108
+N****
+G********
+
+        152
+P****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+H***
+
+        205
+S******
+H******
+
+        118
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+G**
+H*****
+
+        175
+A*****
+H*****
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        106
+V****
+J******
+
+        203
+S****
+J*****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        103
+A********
+J****
+
+        179
+C******
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+J******
+
+        195
+V****
+J****
+
+        122
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+P****
+K*******
+
+        115
+A********
+K***
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        156
+J******
+K***
+
+        100
+S*****
+K***
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        173
+S******
+K****
+
+        137
+R*****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+L*****
+
+        127
+J****
+L*****
+
+        165
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+D****
+L**
+
+        114
+D**
+L*
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        177
+J***
+L*********
+
+        133
+J****
+M*****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        128
+S*****
+M*****
+
+        131
+J****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+M*****
+
+        201
+M******
+M*******
+
+        164
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+M*****
+M******
+
+        143
+R******
+M****
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        158
+A****
+M*****
+
+        194
+S*****
+M*****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        126
+I****
+M**********
+
+        104
+B****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+M*****
+
+        124
+K****
+M******
+
+        125
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+J****
+N****
+
+        107
+D****
+N*****
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        198
+D*****
+O*******
+
+        153
+C**********
+O****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        132
+T*
+O****
+
+        168
+L***
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+O***
+
+        146
+K****
+P*******
+
+        140
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+J*****
+P****
+
+        191
+R******
+P******
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        136
+H****
+P*********
+
+        113
+L***
+P***
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        141
+T*****
+R***
+
+        134
+M******
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+R*****
+
+        184
+N******
+S*******
+
+        111
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+I*****
+S******
+
+        139
+J***
+S**
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        161
+S*****
+S*****
+
+        145
+J***
+S****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        159
+L******
+S****
+
+        171
+W******
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+S****
+
+        138
+S******
+S*****
+
+        182
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+M*****
+S*******
+
+        157
+P******
+S****
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        176
+J*******
+T*****
+
+        180
+W******
+T*****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        117
+S****
+T*****
+
+        150
+S***
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+T*****
+
+        155
+O*****
+T******
+
+        112
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+J**********
+U****
+
+        144
+P****
+V*****
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        190
+T******
+V****
+
+        162
+C****
+V******
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+        123
+S*****
+V******
+
+        196
+A****
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+W****
+
+        120
+M******
+W****
+
+        200
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+J*******
+W*****
+
+        105
+D****
+W*******
+
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+        101
+N****
+Y***
+
+        149
+E****
+Z******
+
+EMPLOYEE_ID
+-----------
+FIRST_NAME_MASKED
+--------------------------------------------------------------------------------
+LAST_NAME_MASKED
+--------------------------------------------------------------------------------
+
+
+107 rows selected.
+
+SQL> SELECT EMPLOYEE_ID,
+  2         FIRST_NAME,
+  3         LAST_NAME,
+  4         FLOOR(MONTHS_BETWEEN(SYSDATE, HIRE_DATE)) AS MONTHS_EMPLOYED
+  5  FROM HR.EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 MONTHS_EMPLOYED
+----------- -------------------- ------------------------- ---------------
+        100 Steven               King                                  133
+        101 Neena                Yang                                  106
+        102 Lex                  Garcia                                162
+        103 Alexander            James                                 102
+        104 Bruce                Miller                                 86
+        105 David                Williams                              109
+        106 Valli                Jackson                               101
+        107 Diana                Nguyen                                 89
+        108 Nancy                Gruenberg                             143
+        109 Daniel               Faviet                                143
+        110 John                 Chen                                  106
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 MONTHS_EMPLOYED
+----------- -------------------- ------------------------- ---------------
+        111 Ismael               Sciarra                               106
+        112 Jose Manuel          Urman                                 100
+        113 Luis                 Popp                                   79
+        114 Den                  Li                                    139
+        115 Alexander            Khoo                                  134
+        116 Shelli               Baida                                 103
+        117 Sigal                Tobias                                108
+        118 Guy                  Himuro                                 92
+        119 Karen                Colmenares                             83
+        120 Matthew              Weiss                                 120
+        121 Adam                 Fripp                                 111
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 MONTHS_EMPLOYED
+----------- -------------------- ------------------------- ---------------
+        122 Payam                Kaufling                              135
+        123 Shanta               Vollman                               105
+        124 Kevin                Mourgos                                80
+        125 Julia                Nayer                                 108
+        126 Irene                Mikkilineni                            94
+        127 James                Landry                                 90
+        128 Steven               Markle                                 76
+        129 Laura                Bissot                                107
+        130 Mozhe                Atkinson                              105
+        131 James                Marlow                                113
+        132 TJ                   Olson                                  87
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 MONTHS_EMPLOYED
+----------- -------------------- ------------------------- ---------------
+        133 Jason                Mallin                                121
+        134 Michael              Rogers                                 95
+        135 Ki                   Gee                                    79
+        136 Hazel                Philtanker                             77
+        137 Renske               Ladwig                                132
+        138 Stephen              Stiles                                105
+        139 John                 Seo                                   101
+        140 Joshua               Patel                                  99
+        141 Trenna               Rajs                                  129
+        142 Curtis               Davies                                114
+        143 Randall              Matos                                 100
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 MONTHS_EMPLOYED
+----------- -------------------- ------------------------- ---------------
+        144 Peter                Vargas                                 96
+        145 John                 Singh                                 118
+        146 Karen                Partners                              114
+        147 Alberto              Errazuriz                             112
+        148 Gerald               Cambrault                              81
+        149 Eleni                Zlotkey                                78
+        150 Sean                 Tucker                                114
+        151 David                Bernstein                             112
+        152 Peter                Hall                                  107
+        153 Christopher          Olsen                                 100
+        154 Nanette              Cambrault                              91
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 MONTHS_EMPLOYED
+----------- -------------------- ------------------------- ---------------
+        155 Oliver               Tuvault                                80
+        156 Janette              King                                  126
+        157 Patrick              Sully                                 124
+        158 Allan                McEwen                                120
+        159 Lindsey              Smith                                 112
+        160 Louise               Doran                                 103
+        161 Sarath               Sewall                                 92
+        162 Clara                Vishney                               104
+        163 Danielle             Greene                                 88
+        164 Mattea               Marvins                                78
+        165 David                Lee                                    77
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 MONTHS_EMPLOYED
+----------- -------------------- ------------------------- ---------------
+        166 Sundar               Ande                                   76
+        167 Amit                 Banda                                  75
+        168 Lisa                 Ozer                                  112
+        169 Harrison             Bloom                                 100
+        170 Tayler               Fox                                   102
+        171 William              Smith                                  89
+        172 Elizabeth            Bates                                  88
+        173 Sundita              Kumar                                  75
+        174 Ellen                Abel                                  122
+        175 Alyssa               Hutton                                112
+        176 Jonathon             Taylor                                100
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 MONTHS_EMPLOYED
+----------- -------------------- ------------------------- ---------------
+        177 Jack                 Livingston                             99
+        178 Kimberely            Grant                                  86
+        179 Charles              Johnson                                78
+        180 Winston              Taylor                                102
+        181 Jean                 Fleaur                                101
+        182 Martha               Sullivan                               85
+        183 Girard               Geoni                                  77
+        184 Nandita              Sarchand                              126
+        185 Alexis               Bull                                  113
+        186 Julia                Dellinger                              97
+        187 Anthony              Cabrio                                 89
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 MONTHS_EMPLOYED
+----------- -------------------- ------------------------- ---------------
+        188 Kelly                Chung                                 109
+        189 Jennifer             Dilly                                 107
+        190 Timothy              Venzl                                  96
+        191 Randall              Perkins                                79
+        192 Sarah                Bell                                  125
+        193 Britney              Everett                               112
+        194 Samuel               McLeod                                 97
+        195 Vance                Jones                                  88
+        196 Alana                Walsh                                  99
+        197 Kevin                Feeney                                 98
+        198 Donald               OConnell                               85
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 MONTHS_EMPLOYED
+----------- -------------------- ------------------------- ---------------
+        199 Douglas              Grant                                  78
+        200 Jennifer             Whalen                                130
+        201 Michael              Martinez                              125
+        202 Pat                  Davis                                 107
+        203 Susan                Jacobs                                145
+        204 Hermann              Brown                                 145
+        205 Shelley              Higgins                               145
+        206 William              Gietz                                 145
+
+107 rows selected.
+
+SQL> SELECT EMPLOYEE_ID,
+  2         FIRST_NAME,
+  3         LAST_NAME,
+  4         DECODE(JOB_ID,
+  5                'AD_PRES', 'A',
+  6                'ST_MAN', 'B',
+  7                'IT_PROG', 'C',
+  8                'SA_REP', 'D',
+  9                'ST_CLERK', 'E',
+ 10                '0') AS JOB_GRADE
+ 11  FROM HR.EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        100 Steven               King                      A
+        101 Neena                Yang                      0
+        102 Lex                  Garcia                    0
+        103 Alexander            James                     C
+        104 Bruce                Miller                    C
+        105 David                Williams                  C
+        106 Valli                Jackson                   C
+        107 Diana                Nguyen                    C
+        108 Nancy                Gruenberg                 0
+        109 Daniel               Faviet                    0
+        110 John                 Chen                      0
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        111 Ismael               Sciarra                   0
+        112 Jose Manuel          Urman                     0
+        113 Luis                 Popp                      0
+        114 Den                  Li                        0
+        115 Alexander            Khoo                      0
+        116 Shelli               Baida                     0
+        117 Sigal                Tobias                    0
+        118 Guy                  Himuro                    0
+        119 Karen                Colmenares                0
+        120 Matthew              Weiss                     B
+        121 Adam                 Fripp                     B
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        122 Payam                Kaufling                  B
+        123 Shanta               Vollman                   B
+        124 Kevin                Mourgos                   B
+        125 Julia                Nayer                     E
+        126 Irene                Mikkilineni               E
+        127 James                Landry                    E
+        128 Steven               Markle                    E
+        129 Laura                Bissot                    E
+        130 Mozhe                Atkinson                  E
+        131 James                Marlow                    E
+        132 TJ                   Olson                     E
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        133 Jason                Mallin                    E
+        134 Michael              Rogers                    E
+        135 Ki                   Gee                       E
+        136 Hazel                Philtanker                E
+        137 Renske               Ladwig                    E
+        138 Stephen              Stiles                    E
+        139 John                 Seo                       E
+        140 Joshua               Patel                     E
+        141 Trenna               Rajs                      E
+        142 Curtis               Davies                    E
+        143 Randall              Matos                     E
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        144 Peter                Vargas                    E
+        145 John                 Singh                     0
+        146 Karen                Partners                  0
+        147 Alberto              Errazuriz                 0
+        148 Gerald               Cambrault                 0
+        149 Eleni                Zlotkey                   0
+        150 Sean                 Tucker                    D
+        151 David                Bernstein                 D
+        152 Peter                Hall                      D
+        153 Christopher          Olsen                     D
+        154 Nanette              Cambrault                 D
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        155 Oliver               Tuvault                   D
+        156 Janette              King                      D
+        157 Patrick              Sully                     D
+        158 Allan                McEwen                    D
+        159 Lindsey              Smith                     D
+        160 Louise               Doran                     D
+        161 Sarath               Sewall                    D
+        162 Clara                Vishney                   D
+        163 Danielle             Greene                    D
+        164 Mattea               Marvins                   D
+        165 David                Lee                       D
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        166 Sundar               Ande                      D
+        167 Amit                 Banda                     D
+        168 Lisa                 Ozer                      D
+        169 Harrison             Bloom                     D
+        170 Tayler               Fox                       D
+        171 William              Smith                     D
+        172 Elizabeth            Bates                     D
+        173 Sundita              Kumar                     D
+        174 Ellen                Abel                      D
+        175 Alyssa               Hutton                    D
+        176 Jonathon             Taylor                    D
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        177 Jack                 Livingston                D
+        178 Kimberely            Grant                     D
+        179 Charles              Johnson                   D
+        180 Winston              Taylor                    0
+        181 Jean                 Fleaur                    0
+        182 Martha               Sullivan                  0
+        183 Girard               Geoni                     0
+        184 Nandita              Sarchand                  0
+        185 Alexis               Bull                      0
+        186 Julia                Dellinger                 0
+        187 Anthony              Cabrio                    0
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        188 Kelly                Chung                     0
+        189 Jennifer             Dilly                     0
+        190 Timothy              Venzl                     0
+        191 Randall              Perkins                   0
+        192 Sarah                Bell                      0
+        193 Britney              Everett                   0
+        194 Samuel               McLeod                    0
+        195 Vance                Jones                     0
+        196 Alana                Walsh                     0
+        197 Kevin                Feeney                    0
+        198 Donald               OConnell                  0
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        199 Douglas              Grant                     0
+        200 Jennifer             Whalen                    0
+        201 Michael              Martinez                  0
+        202 Pat                  Davis                     0
+        203 Susan                Jacobs                    0
+        204 Hermann              Brown                     0
+        205 Shelley              Higgins                   0
+        206 William              Gietz                     0
+
+107 rows selected.
+
+SQL> SELECT EMPLOYEE_ID,
+  2         FIRST_NAME,
+  3         LAST_NAME,
+  4         CASE JOB_ID
+  5             WHEN 'AD_PRES' THEN 'A'
+  6             WHEN 'ST_MAN' THEN 'B'
+  7             WHEN 'IT_PROG' THEN 'C'
+  8             WHEN 'SA_REP' THEN 'D'
+  9             WHEN 'ST_CLERK' THEN 'E'
+ 10             ELSE '0'
+ 11         END AS JOB_GRADE
+ 12  FROM HR.EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        100 Steven               King                      A
+        101 Neena                Yang                      0
+        102 Lex                  Garcia                    0
+        103 Alexander            James                     C
+        104 Bruce                Miller                    C
+        105 David                Williams                  C
+        106 Valli                Jackson                   C
+        107 Diana                Nguyen                    C
+        108 Nancy                Gruenberg                 0
+        109 Daniel               Faviet                    0
+        110 John                 Chen                      0
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        111 Ismael               Sciarra                   0
+        112 Jose Manuel          Urman                     0
+        113 Luis                 Popp                      0
+        114 Den                  Li                        0
+        115 Alexander            Khoo                      0
+        116 Shelli               Baida                     0
+        117 Sigal                Tobias                    0
+        118 Guy                  Himuro                    0
+        119 Karen                Colmenares                0
+        120 Matthew              Weiss                     B
+        121 Adam                 Fripp                     B
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        122 Payam                Kaufling                  B
+        123 Shanta               Vollman                   B
+        124 Kevin                Mourgos                   B
+        125 Julia                Nayer                     E
+        126 Irene                Mikkilineni               E
+        127 James                Landry                    E
+        128 Steven               Markle                    E
+        129 Laura                Bissot                    E
+        130 Mozhe                Atkinson                  E
+        131 James                Marlow                    E
+        132 TJ                   Olson                     E
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        133 Jason                Mallin                    E
+        134 Michael              Rogers                    E
+        135 Ki                   Gee                       E
+        136 Hazel                Philtanker                E
+        137 Renske               Ladwig                    E
+        138 Stephen              Stiles                    E
+        139 John                 Seo                       E
+        140 Joshua               Patel                     E
+        141 Trenna               Rajs                      E
+        142 Curtis               Davies                    E
+        143 Randall              Matos                     E
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        144 Peter                Vargas                    E
+        145 John                 Singh                     0
+        146 Karen                Partners                  0
+        147 Alberto              Errazuriz                 0
+        148 Gerald               Cambrault                 0
+        149 Eleni                Zlotkey                   0
+        150 Sean                 Tucker                    D
+        151 David                Bernstein                 D
+        152 Peter                Hall                      D
+        153 Christopher          Olsen                     D
+        154 Nanette              Cambrault                 D
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        155 Oliver               Tuvault                   D
+        156 Janette              King                      D
+        157 Patrick              Sully                     D
+        158 Allan                McEwen                    D
+        159 Lindsey              Smith                     D
+        160 Louise               Doran                     D
+        161 Sarath               Sewall                    D
+        162 Clara                Vishney                   D
+        163 Danielle             Greene                    D
+        164 Mattea               Marvins                   D
+        165 David                Lee                       D
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        166 Sundar               Ande                      D
+        167 Amit                 Banda                     D
+        168 Lisa                 Ozer                      D
+        169 Harrison             Bloom                     D
+        170 Tayler               Fox                       D
+        171 William              Smith                     D
+        172 Elizabeth            Bates                     D
+        173 Sundita              Kumar                     D
+        174 Ellen                Abel                      D
+        175 Alyssa               Hutton                    D
+        176 Jonathon             Taylor                    D
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        177 Jack                 Livingston                D
+        178 Kimberely            Grant                     D
+        179 Charles              Johnson                   D
+        180 Winston              Taylor                    0
+        181 Jean                 Fleaur                    0
+        182 Martha               Sullivan                  0
+        183 Girard               Geoni                     0
+        184 Nandita              Sarchand                  0
+        185 Alexis               Bull                      0
+        186 Julia                Dellinger                 0
+        187 Anthony              Cabrio                    0
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        188 Kelly                Chung                     0
+        189 Jennifer             Dilly                     0
+        190 Timothy              Venzl                     0
+        191 Randall              Perkins                   0
+        192 Sarah                Bell                      0
+        193 Britney              Everett                   0
+        194 Samuel               McLeod                    0
+        195 Vance                Jones                     0
+        196 Alana                Walsh                     0
+        197 Kevin                Feeney                    0
+        198 Donald               OConnell                  0
+
+EMPLOYEE_ID FIRST_NAME           LAST_NAME                 J
+----------- -------------------- ------------------------- -
+        199 Douglas              Grant                     0
+        200 Jennifer             Whalen                    0
+        201 Michael              Martinez                  0
+        202 Pat                  Davis                     0
+        203 Susan                Jacobs                    0
+        204 Hermann              Brown                     0
+        205 Shelley              Higgins                   0
+        206 William              Gietz                     0
+
+107 rows selected.
+
+SQL> SELECT e.EMPLOYEE_ID,
+  2         e.LAST_NAME
+  3  FROM HR.EMPLOYEES e
+  4  WHERE e.DEPARTMENT_ID IN (
+  5      SELECT d.DEPARTMENT_ID
+  6      FROM HR.EMPLOYEES d
+  7      WHERE d.LAST_NAME LIKE '%i%'
+  8  );
+
+EMPLOYEE_ID LAST_NAME
+----------- -------------------------
+        100 King
+        101 Yang
+        102 Garcia
+        103 James
+        104 Miller
+        105 Williams
+        106 Jackson
+        107 Nguyen
+        108 Gruenberg
+        109 Faviet
+        110 Chen
+
+EMPLOYEE_ID LAST_NAME
+----------- -------------------------
+        111 Sciarra
+        112 Urman
+        113 Popp
+        114 Li
+        115 Khoo
+        116 Baida
+        117 Tobias
+        118 Himuro
+        119 Colmenares
+        120 Weiss
+        121 Fripp
+
+EMPLOYEE_ID LAST_NAME
+----------- -------------------------
+        122 Kaufling
+        123 Vollman
+        124 Mourgos
+        125 Nayer
+        126 Mikkilineni
+        127 Landry
+        128 Markle
+        129 Bissot
+        130 Atkinson
+        131 Marlow
+        132 Olson
+
+EMPLOYEE_ID LAST_NAME
+----------- -------------------------
+        133 Mallin
+        134 Rogers
+        135 Gee
+        136 Philtanker
+        137 Ladwig
+        138 Stiles
+        139 Seo
+        140 Patel
+        141 Rajs
+        142 Davies
+        143 Matos
+
+EMPLOYEE_ID LAST_NAME
+----------- -------------------------
+        144 Vargas
+        145 Singh
+        146 Partners
+        147 Errazuriz
+        148 Cambrault
+        149 Zlotkey
+        150 Tucker
+        151 Bernstein
+        152 Hall
+        153 Olsen
+        154 Cambrault
+
+EMPLOYEE_ID LAST_NAME
+----------- -------------------------
+        155 Tuvault
+        156 King
+        157 Sully
+        158 McEwen
+        159 Smith
+        160 Doran
+        161 Sewall
+        162 Vishney
+        163 Greene
+        164 Marvins
+        165 Lee
+
+EMPLOYEE_ID LAST_NAME
+----------- -------------------------
+        166 Ande
+        167 Banda
+        168 Ozer
+        169 Bloom
+        170 Fox
+        171 Smith
+        172 Bates
+        173 Kumar
+        174 Abel
+        175 Hutton
+        176 Taylor
+
+EMPLOYEE_ID LAST_NAME
+----------- -------------------------
+        177 Livingston
+        179 Johnson
+        180 Taylor
+        181 Fleaur
+        182 Sullivan
+        183 Geoni
+        184 Sarchand
+        185 Bull
+        186 Dellinger
+        187 Cabrio
+        188 Chung
+
+EMPLOYEE_ID LAST_NAME
+----------- -------------------------
+        189 Dilly
+        190 Venzl
+        191 Perkins
+        192 Bell
+        193 Everett
+        194 McLeod
+        195 Jones
+        196 Walsh
+        197 Feeney
+        198 OConnell
+        199 Grant
+
+EMPLOYEE_ID LAST_NAME
+----------- -------------------------
+        201 Martinez
+        202 Davis
+        205 Higgins
+        206 Gietz
+
+103 rows selected.
+
+SQL> -- Create the table
+SQL> CREATE TABLE MY_EMP_TABLE (
+  2      ID NUMBER PRIMARY KEY,
+  3      LAST_NAME VARCHAR2(50),
+  4      FIRST_NAME VARCHAR2(50),
+  5      SALARY NUMBER
+  6  );
+
+Table created.
+
+SQL>
+SQL> -- Insert rows
+SQL> INSERT INTO MY_EMP_TABLE (ID, LAST_NAME, FIRST_NAME, SALARY) VALUES (1, 'Black', 'John', 1100);
+
+1 row created.
+
+SQL> INSERT INTO MY_EMP_TABLE (ID, LAST_NAME, FIRST_NAME, SALARY) VALUES (2, 'White', 'Kent', 1300);
+
+1 row created.
+
+SQL> INSERT INTO MY_EMP_TABLE (ID, LAST_NAME, FIRST_NAME, SALARY) VALUES (3, 'Orange', 'David', 1700);
+
+1 row created.
+
+SQL> INSERT INTO MY_EMP_TABLE (ID, LAST_NAME, FIRST_NAME, SALARY) VALUES (4, 'Pink', 'Alissa', 1900);
+
+1 row created.
+
+SQL>
+SQL> -- Update salary
+SQL> UPDATE MY_EMP_TABLE
+  2  SET SALARY = SALARY * 1.10;
+
+4 rows updated.
+
+SQL>
+SQL> -- Delete rows where FIRST_NAME is David
+SQL> DELETE FROM MY_EMP_TABLE
+  2  WHERE FIRST_NAME = 'David';
+
+1 row deleted.
+
+SQL>
+SQL> -- Truncate table
+SQL> TRUNCATE TABLE MY_EMP_TABLE;
+
+Table truncated.
+
+SQL> -- 1. Add a column to the EMPLOYEES table named MAX_SALARY
+SQL> ALTER TABLE HR.EMPLOYEES
+  2  ADD MAX_SALARY NUMBER;
+
+Table altered.
+
+SQL>
+SQL> -- 2. Update MAX_SALARY with the maximum salary amount using a subquery
+SQL> UPDATE HR.EMPLOYEES
+  2  SET MAX_SALARY = (SELECT MAX(SALARY) FROM HR.EMPLOYEES);
+
+107 rows updated.
+
+SQL>
+SQL> -- 3. Delete the employee who has the minimum salary using a subquery
+SQL> DELETE FROM HR.EMPLOYEES
+  2  WHERE SALARY = (SELECT MIN(SALARY) FROM HR.EMPLOYEES);
+
+1 row deleted.
+
+SQL> -- 1. Define an index on DEPARTMENT_NAME column of DEPARTMENTS table
+SQL> CREATE INDEX DPR_NAME_IDX ON HR.DEPARTMENTS(DEPARTMENT_NAME);
+
+Index created.
+
+SQL>
+SQL> -- 2. Define a constraint on employee salary
+SQL> ALTER TABLE HR.EMPLOYEES
+  2  ADD CONSTRAINT CNSTR_SALARY CHECK (SALARY BETWEEN 1000 AND 100000);
+
+Table altered.
+
+SQL>
+SQL> -- 3. Drop the defined index
+SQL> DROP INDEX DPR_NAME_IDX;
+
+Index dropped.
+
+SQL>
+SQL> -- 4. Enable, disable, and drop the defined constraint
+SQL> -- Enable constraint
+SQL> ALTER TABLE HR.EMPLOYEES ENABLE CONSTRAINT CNSTR_SALARY;
+
+Table altered.
+
+SQL>
+SQL> -- Disable constraint
+SQL> ALTER TABLE HR.EMPLOYEES DISABLE CONSTRAINT CNSTR_SALARY;
+
+Table altered.
+
+SQL>
+SQL> -- Drop constraint
+SQL> ALTER TABLE HR.EMPLOYEES DROP CONSTRAINT CNSTR_SALARY;
+
+Table altered.
+
+SQL> -- Create a new table with distinct department_id
+SQL> CREATE TABLE HR.EMP_DEPT AS
+  2  SELECT DISTINCT DEPARTMENT_ID
+  3  FROM HR.EMPLOYEES;
+
+Table created.
+
+SQL>
+SQL> -- Add department_name column to the new table
+SQL> ALTER TABLE HR.EMP_DEPT
+  2  ADD DEPARTMENT_NAME VARCHAR2(50);
+
+Table altered.
+
+SQL>
+SQL> -- Use MERGE to update and insert department_name values
+SQL> MERGE INTO HR.EMP_DEPT ed
+  2  USING HR.DEPARTMENTS d
+  3  ON (ed.DEPARTMENT_ID = d.DEPARTMENT_ID)
+  4  WHEN MATCHED THEN
+  5      UPDATE SET ed.DEPARTMENT_NAME = d.DEPARTMENT_NAME
+  6  WHEN NOT MATCHED THEN
+  7      INSERT (DEPARTMENT_ID, DEPARTMENT_NAME)
+  8      VALUES (d.DEPARTMENT_ID, d.DEPARTMENT_NAME);
+
+27 rows merged.
+
+SQL> WITH EmployeeInfo AS (
+  2      SELECT FIRST_NAME, LAST_NAME, JOB_ID, DEPARTMENT_ID
+  3      FROM HR.EMPLOYEES
+  4      WHERE JOB_ID LIKE 'S%'
+  5  ),
+  6  JobSalaries AS (
+  7      SELECT JOB_TITLE, MIN(SALARY) AS MIN_SALARY, MAX(SALARY) AS MAX_SALARY
+  8      FROM HR.EMPLOYEES
+  9      GROUP BY JOB_TITLE
+ 10  )
+ 11  SELECT e.FIRST_NAME || ' ' || e.LAST_NAME AS FULL_NAME,
+ 12         e.JOB_ID,
+ 13         e.DEPARTMENT_ID,
+ 14         j.JOB_TITLE,
+ 15         j.MIN_SALARY,
+ 16         j.MAX_SALARY,
+ 17         d.DEPARTMENT_NAME
+ 18  FROM EmployeeInfo e
+ 19  JOIN JobSalaries j ON e.JOB_ID = j.JOB_TITLE
+ 20  JOIN HR.DEPARTMENTS d ON e.DEPARTMENT_ID = d.DEPARTMENT_ID;
+    GROUP BY JOB_TITLE
+             *
+ERROR at line 9:
+ORA-00904: "JOB_TITLE": invalid identifier
+
+
+SQL> WITH EmployeeInfo AS (
+  2      SELECT FIRST_NAME, LAST_NAME, JOB_ID, DEPARTMENT_ID
+  3      FROM HR.EMPLOYEES
+  4      WHERE JOB_ID LIKE 'S%'
+  5  ),
+  6  JobSalaries AS (
+  7      SELECT JOB_ID, MIN(SALARY) AS MIN_SALARY, MAX(SALARY) AS MAX_SALARY
+  8      FROM HR.EMPLOYEES
+  9      GROUP BY JOB_ID
+ 10  )
+ 11  SELECT e.FIRST_NAME || ' ' || e.LAST_NAME AS FULL_NAME,
+ 12         e.JOB_ID,
+ 13         e.DEPARTMENT_ID,
+ 14         j.MIN_SALARY,
+ 15         j.MAX_SALARY,
+ 16         d.DEPARTMENT_NAME
+ 17  FROM EmployeeInfo e
+ 18  JOIN JobSalaries j ON e.JOB_ID = j.JOB_ID
+ 19  JOIN HR.DEPARTMENTS d ON e.DEPARTMENT_ID = d.DEPARTMENT_ID;
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+John Singh                                     SA_MAN                80
+     10500      14000 Sales
+
+Karen Partners                                 SA_MAN                80
+     10500      14000 Sales
+
+Alberto Errazuriz                              SA_MAN                80
+     10500      14000 Sales
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Gerald Cambrault                               SA_MAN                80
+     10500      14000 Sales
+
+Eleni Zlotkey                                  SA_MAN                80
+     10500      14000 Sales
+
+Sean Tucker                                    SA_REP                80
+      6100      11500 Sales
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+David Bernstein                                SA_REP                80
+      6100      11500 Sales
+
+Peter Hall                                     SA_REP                80
+      6100      11500 Sales
+
+Christopher Olsen                              SA_REP                80
+      6100      11500 Sales
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Nanette Cambrault                              SA_REP                80
+      6100      11500 Sales
+
+Oliver Tuvault                                 SA_REP                80
+      6100      11500 Sales
+
+Janette King                                   SA_REP                80
+      6100      11500 Sales
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Patrick Sully                                  SA_REP                80
+      6100      11500 Sales
+
+Allan McEwen                                   SA_REP                80
+      6100      11500 Sales
+
+Lindsey Smith                                  SA_REP                80
+      6100      11500 Sales
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Louise Doran                                   SA_REP                80
+      6100      11500 Sales
+
+Sarath Sewall                                  SA_REP                80
+      6100      11500 Sales
+
+Clara Vishney                                  SA_REP                80
+      6100      11500 Sales
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Danielle Greene                                SA_REP                80
+      6100      11500 Sales
+
+Mattea Marvins                                 SA_REP                80
+      6100      11500 Sales
+
+David Lee                                      SA_REP                80
+      6100      11500 Sales
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Sundar Ande                                    SA_REP                80
+      6100      11500 Sales
+
+Amit Banda                                     SA_REP                80
+      6100      11500 Sales
+
+Lisa Ozer                                      SA_REP                80
+      6100      11500 Sales
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Harrison Bloom                                 SA_REP                80
+      6100      11500 Sales
+
+Tayler Fox                                     SA_REP                80
+      6100      11500 Sales
+
+William Smith                                  SA_REP                80
+      6100      11500 Sales
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Elizabeth Bates                                SA_REP                80
+      6100      11500 Sales
+
+Sundita Kumar                                  SA_REP                80
+      6100      11500 Sales
+
+Ellen Abel                                     SA_REP                80
+      6100      11500 Sales
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Alyssa Hutton                                  SA_REP                80
+      6100      11500 Sales
+
+Jonathon Taylor                                SA_REP                80
+      6100      11500 Sales
+
+Jack Livingston                                SA_REP                80
+      6100      11500 Sales
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Charles Johnson                                SA_REP                80
+      6100      11500 Sales
+
+Winston Taylor                                 SH_CLERK              50
+      2500       4200 Shipping
+
+Jean Fleaur                                    SH_CLERK              50
+      2500       4200 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Martha Sullivan                                SH_CLERK              50
+      2500       4200 Shipping
+
+Girard Geoni                                   SH_CLERK              50
+      2500       4200 Shipping
+
+Nandita Sarchand                               SH_CLERK              50
+      2500       4200 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Alexis Bull                                    SH_CLERK              50
+      2500       4200 Shipping
+
+Julia Dellinger                                SH_CLERK              50
+      2500       4200 Shipping
+
+Anthony Cabrio                                 SH_CLERK              50
+      2500       4200 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Kelly Chung                                    SH_CLERK              50
+      2500       4200 Shipping
+
+Jennifer Dilly                                 SH_CLERK              50
+      2500       4200 Shipping
+
+Timothy Venzl                                  SH_CLERK              50
+      2500       4200 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Randall Perkins                                SH_CLERK              50
+      2500       4200 Shipping
+
+Sarah Bell                                     SH_CLERK              50
+      2500       4200 Shipping
+
+Britney Everett                                SH_CLERK              50
+      2500       4200 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Samuel McLeod                                  SH_CLERK              50
+      2500       4200 Shipping
+
+Vance Jones                                    SH_CLERK              50
+      2500       4200 Shipping
+
+Alana Walsh                                    SH_CLERK              50
+      2500       4200 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Kevin Feeney                                   SH_CLERK              50
+      2500       4200 Shipping
+
+Donald OConnell                                SH_CLERK              50
+      2500       4200 Shipping
+
+Douglas Grant                                  SH_CLERK              50
+      2500       4200 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Julia Nayer                                    ST_CLERK              50
+      2200       3600 Shipping
+
+Irene Mikkilineni                              ST_CLERK              50
+      2200       3600 Shipping
+
+James Landry                                   ST_CLERK              50
+      2200       3600 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Steven Markle                                  ST_CLERK              50
+      2200       3600 Shipping
+
+Laura Bissot                                   ST_CLERK              50
+      2200       3600 Shipping
+
+Mozhe Atkinson                                 ST_CLERK              50
+      2200       3600 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+James Marlow                                   ST_CLERK              50
+      2200       3600 Shipping
+
+Jason Mallin                                   ST_CLERK              50
+      2200       3600 Shipping
+
+Michael Rogers                                 ST_CLERK              50
+      2200       3600 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Ki Gee                                         ST_CLERK              50
+      2200       3600 Shipping
+
+Hazel Philtanker                               ST_CLERK              50
+      2200       3600 Shipping
+
+Renske Ladwig                                  ST_CLERK              50
+      2200       3600 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Stephen Stiles                                 ST_CLERK              50
+      2200       3600 Shipping
+
+John Seo                                       ST_CLERK              50
+      2200       3600 Shipping
+
+Joshua Patel                                   ST_CLERK              50
+      2200       3600 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Trenna Rajs                                    ST_CLERK              50
+      2200       3600 Shipping
+
+Curtis Davies                                  ST_CLERK              50
+      2200       3600 Shipping
+
+Randall Matos                                  ST_CLERK              50
+      2200       3600 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Peter Vargas                                   ST_CLERK              50
+      2200       3600 Shipping
+
+Matthew Weiss                                  ST_MAN                50
+      5800       8200 Shipping
+
+Adam Fripp                                     ST_MAN                50
+      5800       8200 Shipping
+
+
+FULL_NAME                                      JOB_ID     DEPARTMENT_ID
+---------------------------------------------- ---------- -------------
+MIN_SALARY MAX_SALARY DEPARTMENT_NAME
+---------- ---------- ------------------------------
+Payam Kaufling                                 ST_MAN                50
+      5800       8200 Shipping
+
+Shanta Vollman                                 ST_MAN                50
+      5800       8200 Shipping
+
+Kevin Mourgos                                  ST_MAN                50
+      5800       8200 Shipping
+
+
+78 rows selected.
+
+SQL> COMMIT: Finalizes all the changes made in the current transaction.
+  2  ROLLBACK: Undoes all the changes made in the current transaction.
+  3
+
+
+
+
+

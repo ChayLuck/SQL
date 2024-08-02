@@ -1,0 +1,1386 @@
+SQL> SELECT d.DEPARTMENT_ID,
+  2         LISTAGG(e.FIRST_NAME || ' ' || e.LAST_NAME, '; ') WITHIN GROUP (ORDER BY e.FIRST_NAME) AS EMPLOYEES
+  3  FROM HR.EMPLOYEES e
+  4  JOIN HR.DEPARTMENTS d ON e.DEPARTMENT_ID = d.DEPARTMENT_ID
+  5  GROUP BY d.DEPARTMENT_ID;
+
+DEPARTMENT_ID
+-------------
+EMPLOYEES
+--------------------------------------------------------------------------------
+           10
+Jennifer Whalen
+
+           20
+Michael Martinez; Pat Davis
+
+           30
+Alexander Khoo; Den Li; Guy Himuro; Karen Colmenares; Shelli Baida; Sigal Tobias
+
+
+DEPARTMENT_ID
+-------------
+EMPLOYEES
+--------------------------------------------------------------------------------
+           40
+Susan Jacobs
+
+           50
+Adam Fripp; Alana Walsh; Alexis Bull; Anthony Cabrio; Britney Everett; Curtis Da
+vies; Donald OConnell; Douglas Grant; Girard Geoni; Hazel Philtanker; Irene Mikk
+ilineni; James Landry; James Marlow; Jason Mallin; Jean Fleaur; Jennifer Dilly;
+John Seo; Joshua Patel; Julia Dellinger; Julia Nayer; Kelly Chung; Kevin Feeney;
+ Kevin Mourgos; Ki Gee; Laura Bissot; Martha Sullivan; Matthew Weiss; Michael Ro
+
+DEPARTMENT_ID
+-------------
+EMPLOYEES
+--------------------------------------------------------------------------------
+gers; Mozhe Atkinson; Nandita Sarchand; Payam Kaufling; Peter Vargas; Randall Ma
+tos; Randall Perkins; Renske Ladwig; Samuel McLeod; Sarah Bell; Shanta Vollman;
+Stephen Stiles; Steven Markle; Timothy Venzl; Trenna Rajs; Vance Jones; Winston
+Taylor
+
+           60
+Alexander James; Bruce Miller; David Williams; Diana Nguyen; Valli Jackson
+
+           70
+
+DEPARTMENT_ID
+-------------
+EMPLOYEES
+--------------------------------------------------------------------------------
+Hermann Brown
+
+           80
+Alberto Errazuriz; Allan McEwen; Alyssa Hutton; Amit Banda; Charles Johnson; Chr
+istopher Olsen; Clara Vishney; Danielle Greene; David Bernstein; David Lee; Elen
+i Zlotkey; Elizabeth Bates; Ellen Abel; Gerald Cambrault; Harrison Bloom; Jack L
+ivingston; Janette King; John Singh; Jonathon Taylor; Karen Partners; Lindsey Sm
+ith; Lisa Ozer; Louise Doran; Mattea Marvins; Nanette Cambrault; Oliver Tuvault;
+ Patrick Sully; Peter Hall; Sarath Sewall; Sean Tucker; Sundar Ande; Sundita Kum
+
+DEPARTMENT_ID
+-------------
+EMPLOYEES
+--------------------------------------------------------------------------------
+ar; Tayler Fox; William Smith
+
+           90
+Lex Garcia; Neena Yang; Steven King
+
+          100
+Daniel Faviet; Ismael Sciarra; John Chen; Jose Manuel Urman; Luis Popp; Nancy Gr
+uenberg
+
+
+DEPARTMENT_ID
+-------------
+EMPLOYEES
+--------------------------------------------------------------------------------
+          110
+Shelley Higgins; William Gietz
+
+
+11 rows selected.
+
+SQL> SELECT e.FIRST_NAME,
+  2         e.LAST_NAME,
+  3         e.SALARY,
+  4         COALESCE(LAG(e.SALARY, 1) OVER (PARTITION BY e.JOB_ID ORDER BY e.HIRE_DATE), 0) AS PRECEDING_SALARY,
+  5         COALESCE(LEAD(e.SALARY, 1) OVER (PARTITION BY e.JOB_ID ORDER BY e.HIRE_DATE), 0) AS FOLLOWING_SALARY
+  6  FROM HR.EMPLOYEES e
+  7  ORDER BY e.JOB_ID, e.HIRE_DATE;
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+William              Gietz                           8300                0
+               0
+
+Shelley              Higgins                        12008                0
+               0
+
+Jennifer             Whalen                          4400                0
+               0
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Steven               King                           24000                0
+               0
+
+Lex                  Garcia                         17000                0
+           17000
+
+Neena                Yang                           17000            17000
+               0
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Daniel               Faviet                          9000                0
+            8200
+
+John                 Chen                            8200             9000
+            7700
+
+Ismael               Sciarra                         7700             8200
+            7800
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Jose Manuel          Urman                           7800             7700
+            6900
+
+Luis                 Popp                            6900             7800
+               0
+
+Nancy                Gruenberg                      12008                0
+               0
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Susan                Jacobs                          6500                0
+               0
+
+David                Williams                        4800                0
+            9000
+
+Alexander            James                           9000             4800
+            4800
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Valli                Jackson                         4800             9000
+            4200
+
+Diana                Nguyen                          4200             4800
+            6000
+
+Bruce                Miller                          6000             4200
+               0
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Michael              Martinez                       13000                0
+               0
+
+Pat                  Davis                           6000                0
+               0
+
+Hermann              Brown                          10000                0
+               0
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Alexander            Khoo                            3100                0
+            2800
+
+Sigal                Tobias                          2800             3100
+            2900
+
+Shelli               Baida                           2900             2800
+            2600
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Guy                  Himuro                          2600             2900
+            2500
+
+Karen                Colmenares                      2500             2600
+               0
+
+Den                  Li                             11000                0
+               0
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+John                 Singh                          14000                0
+           13500
+
+Karen                Partners                       13500            14000
+           12000
+
+Alberto              Errazuriz                      12000            13500
+           11000
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Gerald               Cambrault                      11000            12000
+           10500
+
+Eleni                Zlotkey                        10500            11000
+               0
+
+Janette              King                           10000                0
+            9500
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Patrick              Sully                           9500            10000
+           11000
+
+Ellen                Abel                           11000             9500
+            9000
+
+Allan                McEwen                          9000            11000
+           10000
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Sean                 Tucker                         10000             9000
+            8000
+
+Lindsey              Smith                           8000            10000
+           11500
+
+Lisa                 Ozer                           11500             8000
+            8800
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Alyssa               Hutton                          8800            11500
+            9500
+
+David                Bernstein                       9500             8800
+            9000
+
+Peter                Hall                            9000             9500
+           10500
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Clara                Vishney                        10500             9000
+            7500
+
+Louise               Doran                           7500            10500
+            9600
+
+Tayler               Fox                             9600             7500
+           10000
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Harrison             Bloom                          10000             9600
+            8600
+
+Jonathon             Taylor                          8600            10000
+            8000
+
+Christopher          Olsen                           8000             8600
+            8400
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Jack                 Livingston                      8400             8000
+            7000
+
+Sarath               Sewall                          7000             8400
+            7500
+
+Nanette              Cambrault                       7500             7000
+            7400
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+William              Smith                           7400             7500
+            9500
+
+Danielle             Greene                          9500             7400
+            7300
+
+Elizabeth            Bates                           7300             9500
+            7000
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Kimberely            Grant                           7000             7300
+            7000
+
+Oliver               Tuvault                         7000             7000
+            6200
+
+Charles              Johnson                         6200             7000
+            7200
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Mattea               Marvins                         7200             6200
+            6800
+
+David                Lee                             6800             7200
+            6400
+
+Sundar               Ande                            6400             6800
+            6100
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Sundita              Kumar                           6100             6400
+            6200
+
+Amit                 Banda                           6200             6100
+               0
+
+Nandita              Sarchand                        4200                0
+            4000
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Sarah                Bell                            4000             4200
+            4100
+
+Alexis               Bull                            4100             4000
+            3900
+
+Britney              Everett                         3900             4100
+            3800
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Kelly                Chung                           3800             3900
+            3600
+
+Jennifer             Dilly                           3600             3800
+            3200
+
+Winston              Taylor                          3200             3600
+            3100
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Jean                 Fleaur                          3100             3200
+            3100
+
+Alana                Walsh                           3100             3100
+            3000
+
+Kevin                Feeney                          3000             3100
+            3400
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Julia                Dellinger                       3400             3000
+            3200
+
+Samuel               McLeod                          3200             3400
+            2900
+
+Timothy              Venzl                           2900             3200
+            3000
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Anthony              Cabrio                          3000             2900
+            2800
+
+Vance                Jones                           2800             3000
+            2600
+
+Donald               OConnell                        2600             2800
+            2500
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Martha               Sullivan                        2500             2600
+            2500
+
+Randall              Perkins                         2500             2500
+            2600
+
+Douglas              Grant                           2600             2500
+            2800
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Girard               Geoni                           2800             2600
+               0
+
+Renske               Ladwig                          3600                0
+            3500
+
+Trenna               Rajs                            3500             3600
+            3300
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Jason                Mallin                          3300             3500
+            3100
+
+Curtis               Davies                          3100             3300
+            2500
+
+James                Marlow                          2500             3100
+            3200
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Julia                Nayer                           3200             2500
+            3300
+
+Laura                Bissot                          3300             3200
+            3200
+
+Stephen              Stiles                          3200             3300
+            2800
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Mozhe                Atkinson                        2800             3200
+            2700
+
+John                 Seo                             2700             2800
+            2600
+
+Randall              Matos                           2600             2700
+            2500
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Joshua               Patel                           2500             2600
+            2500
+
+Peter                Vargas                          2500             2500
+            2900
+
+Michael              Rogers                          2900             2500
+            2700
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Irene                Mikkilineni                     2700             2900
+            2400
+
+James                Landry                          2400             2700
+            2400
+
+Ki                   Gee                             2400             2400
+            2200
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Hazel                Philtanker                      2200             2400
+            2200
+
+Steven               Markle                          2200             2200
+               0
+
+Payam                Kaufling                        7900                0
+            8000
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Matthew              Weiss                           8000             7900
+            8200
+
+Adam                 Fripp                           8200             8000
+            6500
+
+Shanta               Vollman                         6500             8200
+            5800
+
+
+FIRST_NAME           LAST_NAME                     SALARY PRECEDING_SALARY
+-------------------- ------------------------- ---------- ----------------
+FOLLOWING_SALARY
+----------------
+Kevin                Mourgos                         5800             6500
+               0
+
+
+106 rows selected.
+
+SQL> SELECT e.DEPARTMENT_ID,
+  2         e.FIRST_NAME,
+  3         e.LAST_NAME,
+  4         e.SALARY
+  5  FROM (
+  6      SELECT e.DEPARTMENT_ID,
+  7             e.FIRST_NAME,
+  8             e.LAST_NAME,
+  9             e.SALARY,
+ 10             ROW_NUMBER() OVER (PARTITION BY e.DEPARTMENT_ID ORDER BY e.SALARY DESC) AS RN
+ 11      FROM HR.EMPLOYEES e
+ 12  ) e
+ 13  WHERE e.RN > 1
+ 14  ORDER BY e.DEPARTMENT_ID, e.SALARY;
+
+DEPARTMENT_ID FIRST_NAME           LAST_NAME                     SALARY
+------------- -------------------- ------------------------- ----------
+           20 Pat                  Davis                           6000
+           30 Karen                Colmenares                      2500
+           30 Guy                  Himuro                          2600
+           30 Sigal                Tobias                          2800
+           30 Shelli               Baida                           2900
+           30 Alexander            Khoo                            3100
+           50 Hazel                Philtanker                      2200
+           50 Steven               Markle                          2200
+           50 Ki                   Gee                             2400
+           50 James                Landry                          2400
+           50 Randall              Perkins                         2500
+
+DEPARTMENT_ID FIRST_NAME           LAST_NAME                     SALARY
+------------- -------------------- ------------------------- ----------
+           50 Martha               Sullivan                        2500
+           50 Joshua               Patel                           2500
+           50 James                Marlow                          2500
+           50 Peter                Vargas                          2500
+           50 Randall              Matos                           2600
+           50 Douglas              Grant                           2600
+           50 Donald               OConnell                        2600
+           50 Irene                Mikkilineni                     2700
+           50 John                 Seo                             2700
+           50 Girard               Geoni                           2800
+           50 Mozhe                Atkinson                        2800
+
+DEPARTMENT_ID FIRST_NAME           LAST_NAME                     SALARY
+------------- -------------------- ------------------------- ----------
+           50 Vance                Jones                           2800
+           50 Michael              Rogers                          2900
+           50 Timothy              Venzl                           2900
+           50 Kevin                Feeney                          3000
+           50 Anthony              Cabrio                          3000
+           50 Jean                 Fleaur                          3100
+           50 Alana                Walsh                           3100
+           50 Curtis               Davies                          3100
+           50 Samuel               McLeod                          3200
+           50 Winston              Taylor                          3200
+           50 Stephen              Stiles                          3200
+
+DEPARTMENT_ID FIRST_NAME           LAST_NAME                     SALARY
+------------- -------------------- ------------------------- ----------
+           50 Julia                Nayer                           3200
+           50 Laura                Bissot                          3300
+           50 Jason                Mallin                          3300
+           50 Julia                Dellinger                       3400
+           50 Trenna               Rajs                            3500
+           50 Renske               Ladwig                          3600
+           50 Jennifer             Dilly                           3600
+           50 Kelly                Chung                           3800
+           50 Britney              Everett                         3900
+           50 Sarah                Bell                            4000
+           50 Alexis               Bull                            4100
+
+DEPARTMENT_ID FIRST_NAME           LAST_NAME                     SALARY
+------------- -------------------- ------------------------- ----------
+           50 Nandita              Sarchand                        4200
+           50 Kevin                Mourgos                         5800
+           50 Shanta               Vollman                         6500
+           50 Payam                Kaufling                        7900
+           50 Matthew              Weiss                           8000
+           60 Diana                Nguyen                          4200
+           60 Valli                Jackson                         4800
+           60 David                Williams                        4800
+           60 Bruce                Miller                          6000
+           80 Sundita              Kumar                           6100
+           80 Charles              Johnson                         6200
+
+DEPARTMENT_ID FIRST_NAME           LAST_NAME                     SALARY
+------------- -------------------- ------------------------- ----------
+           80 Amit                 Banda                           6200
+           80 Sundar               Ande                            6400
+           80 David                Lee                             6800
+           80 Sarath               Sewall                          7000
+           80 Oliver               Tuvault                         7000
+           80 Mattea               Marvins                         7200
+           80 Elizabeth            Bates                           7300
+           80 William              Smith                           7400
+           80 Nanette              Cambrault                       7500
+           80 Louise               Doran                           7500
+           80 Christopher          Olsen                           8000
+
+DEPARTMENT_ID FIRST_NAME           LAST_NAME                     SALARY
+------------- -------------------- ------------------------- ----------
+           80 Lindsey              Smith                           8000
+           80 Jack                 Livingston                      8400
+           80 Jonathon             Taylor                          8600
+           80 Alyssa               Hutton                          8800
+           80 Allan                McEwen                          9000
+           80 Peter                Hall                            9000
+           80 David                Bernstein                       9500
+           80 Patrick              Sully                           9500
+           80 Danielle             Greene                          9500
+           80 Tayler               Fox                             9600
+           80 Harrison             Bloom                          10000
+
+DEPARTMENT_ID FIRST_NAME           LAST_NAME                     SALARY
+------------- -------------------- ------------------------- ----------
+           80 Sean                 Tucker                         10000
+           80 Janette              King                           10000
+           80 Eleni                Zlotkey                        10500
+           80 Clara                Vishney                        10500
+           80 Gerald               Cambrault                      11000
+           80 Ellen                Abel                           11000
+           80 Lisa                 Ozer                           11500
+           80 Alberto              Errazuriz                      12000
+           80 Karen                Partners                       13500
+           90 Lex                  Garcia                         17000
+           90 Neena                Yang                           17000
+
+DEPARTMENT_ID FIRST_NAME           LAST_NAME                     SALARY
+------------- -------------------- ------------------------- ----------
+          100 Luis                 Popp                            6900
+          100 Ismael               Sciarra                         7700
+          100 Jose Manuel          Urman                           7800
+          100 John                 Chen                            8200
+          100 Daniel               Faviet                          9000
+          110 William              Gietz                           8300
+
+94 rows selected.
+
+SQL> SELECT e.FIRST_NAME,
+  2         e.LAST_NAME,
+  3         e.HIRE_DATE,
+  4         ROW_NUMBER() OVER (PARTITION BY EXTRACT(YEAR FROM e.HIRE_DATE) ORDER BY e.HIRE_DATE) AS HIRE_ORDER
+  5  FROM HR.EMPLOYEES e
+  6  ORDER BY EXTRACT(YEAR FROM e.HIRE_DATE), HIRE_ORDER;
+
+FIRST_NAME           LAST_NAME                 HIRE_DATE HIRE_ORDER
+-------------------- ------------------------- --------- ----------
+Lex                  Garcia                    13-JAN-11          1
+William              Gietz                     07-JUN-12          1
+Hermann              Brown                     07-JUN-12          2
+Susan                Jacobs                    07-JUN-12          3
+Shelley              Higgins                   07-JUN-12          4
+Daniel               Faviet                    16-AUG-12          5
+Nancy                Gruenberg                 17-AUG-12          6
+Den                  Li                        07-DEC-12          7
+Payam                Kaufling                  01-MAY-13          1
+Alexander            Khoo                      18-MAY-13          2
+Steven               King                      17-JUN-13          3
+
+FIRST_NAME           LAST_NAME                 HIRE_DATE HIRE_ORDER
+-------------------- ------------------------- --------- ----------
+Renske               Ladwig                    14-JUL-13          4
+Jennifer             Whalen                    17-SEP-13          5
+Trenna               Rajs                      17-OCT-13          6
+Nandita              Sarchand                  27-JAN-14          1
+Janette              King                      30-JAN-14          2
+Sarah                Bell                      04-FEB-14          3
+Michael              Martinez                  17-FEB-14          4
+Patrick              Sully                     04-MAR-14          5
+Ellen                Abel                      11-MAY-14          6
+Jason                Mallin                    14-JUN-14          7
+Matthew              Weiss                     18-JUL-14          8
+
+FIRST_NAME           LAST_NAME                 HIRE_DATE HIRE_ORDER
+-------------------- ------------------------- --------- ----------
+Allan                McEwen                    01-AUG-14          9
+John                 Singh                     01-OCT-14         10
+Karen                Partners                  05-JAN-15          1
+Curtis               Davies                    29-JAN-15          2
+Sean                 Tucker                    30-JAN-15          3
+James                Marlow                    16-FEB-15          4
+Alexis               Bull                      20-FEB-15          5
+Britney              Everett                   03-MAR-15          6
+Alberto              Errazuriz                 10-MAR-15          7
+Lindsey              Smith                     10-MAR-15          8
+Lisa                 Ozer                      11-MAR-15          9
+
+FIRST_NAME           LAST_NAME                 HIRE_DATE HIRE_ORDER
+-------------------- ------------------------- --------- ----------
+Alyssa               Hutton                    19-MAR-15         10
+David                Bernstein                 24-MAR-15         11
+Adam                 Fripp                     10-APR-15         12
+Kelly                Chung                     14-JUN-15         13
+David                Williams                  25-JUN-15         14
+Julia                Nayer                     16-JUL-15         15
+Sigal                Tobias                    24-JUL-15         16
+Jennifer             Dilly                     13-AUG-15         17
+Pat                  Davis                     17-AUG-15         18
+Peter                Hall                      20-AUG-15         19
+Laura                Bissot                    20-AUG-15         20
+
+FIRST_NAME           LAST_NAME                 HIRE_DATE HIRE_ORDER
+-------------------- ------------------------- --------- ----------
+Neena                Yang                      21-SEP-15         21
+John                 Chen                      28-SEP-15         22
+Ismael               Sciarra                   30-SEP-15         23
+Shanta               Vollman                   10-OCT-15         24
+Stephen              Stiles                    26-OCT-15         25
+Mozhe                Atkinson                  30-OCT-15         26
+Clara                Vishney                   11-NOV-15         27
+Louise               Doran                     15-DEC-15         28
+Shelli               Baida                     24-DEC-15         29
+Alexander            James                     03-JAN-16          1
+Tayler               Fox                       24-JAN-16          2
+
+FIRST_NAME           LAST_NAME                 HIRE_DATE HIRE_ORDER
+-------------------- ------------------------- --------- ----------
+Winston              Taylor                    24-JAN-16          3
+Valli                Jackson                   05-FEB-16          4
+John                 Seo                       12-FEB-16          5
+Jean                 Fleaur                    23-FEB-16          6
+Jose Manuel          Urman                     07-MAR-16          7
+Randall              Matos                     15-MAR-16          8
+Harrison             Bloom                     23-MAR-16          9
+Jonathon             Taylor                    24-MAR-16         10
+Christopher          Olsen                     30-MAR-16         11
+Joshua               Patel                     06-APR-16         12
+Jack                 Livingston                23-APR-16         13
+
+FIRST_NAME           LAST_NAME                 HIRE_DATE HIRE_ORDER
+-------------------- ------------------------- --------- ----------
+Alana                Walsh                     24-APR-16         14
+Kevin                Feeney                    23-MAY-16         15
+Julia                Dellinger                 24-JUN-16         16
+Samuel               McLeod                    01-JUL-16         17
+Peter                Vargas                    09-JUL-16         18
+Timothy              Venzl                     11-JUL-16         19
+Michael              Rogers                    26-AUG-16         20
+Irene                Mikkilineni               28-SEP-16         21
+Sarath               Sewall                    03-NOV-16         22
+Guy                  Himuro                    15-NOV-16         23
+Nanette              Cambrault                 09-DEC-16         24
+
+FIRST_NAME           LAST_NAME                 HIRE_DATE HIRE_ORDER
+-------------------- ------------------------- --------- ----------
+James                Landry                    14-JAN-17          1
+Anthony              Cabrio                    07-FEB-17          2
+Diana                Nguyen                    07-FEB-17          3
+William              Smith                     23-FEB-17          4
+Vance                Jones                     17-MAR-17          5
+Danielle             Greene                    19-MAR-17          6
+Elizabeth            Bates                     24-MAR-17          7
+Bruce                Miller                    21-MAY-17          8
+Kimberely            Grant                     24-MAY-17          9
+Martha               Sullivan                  21-JUN-17         10
+Donald               OConnell                  21-JUN-17         11
+
+FIRST_NAME           LAST_NAME                 HIRE_DATE HIRE_ORDER
+-------------------- ------------------------- --------- ----------
+Karen                Colmenares                10-AUG-17         12
+Gerald               Cambrault                 15-OCT-17         13
+Kevin                Mourgos                   16-NOV-17         14
+Oliver               Tuvault                   23-NOV-17         15
+Luis                 Popp                      07-DEC-17         16
+Ki                   Gee                       12-DEC-17         17
+Randall              Perkins                   19-DEC-17         18
+Charles              Johnson                   04-JAN-18          1
+Douglas              Grant                     13-JAN-18          2
+Mattea               Marvins                   24-JAN-18          3
+Eleni                Zlotkey                   29-JAN-18          4
+
+FIRST_NAME           LAST_NAME                 HIRE_DATE HIRE_ORDER
+-------------------- ------------------------- --------- ----------
+Girard               Geoni                     03-FEB-18          5
+Hazel                Philtanker                06-FEB-18          6
+David                Lee                       23-FEB-18          7
+Steven               Markle                    08-MAR-18          8
+Sundar               Ande                      24-MAR-18          9
+Amit                 Banda                     21-APR-18         10
+Sundita              Kumar                     21-APR-18         11
+
+106 rows selected.
+
+SQL> SELECT e.FIRST_NAME,
+  2         e.LAST_NAME,
+  3         e.SALARY,
+  4         COALESCE(LAG(e.SALARY, 1) OVER (ORDER BY e.HIRE_DATE), 0) AS SALARY_BEFORE,
+  5         COALESCE(LEAD(e.SALARY, 1) OVER (ORDER BY e.HIRE_DATE), 0) AS SALARY_AFTER
+  6  FROM HR.EMPLOYEES e
+  7  ORDER BY e.HIRE_DATE;
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Lex                  Garcia                         17000             0
+        8300
+
+William              Gietz                           8300         17000
+       10000
+
+Hermann              Brown                          10000          8300
+        6500
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Susan                Jacobs                          6500         10000
+       12008
+
+Shelley              Higgins                        12008          6500
+        9000
+
+Daniel               Faviet                          9000         12008
+       12008
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Nancy                Gruenberg                      12008          9000
+       11000
+
+Den                  Li                             11000         12008
+        7900
+
+Payam                Kaufling                        7900         11000
+        3100
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Alexander            Khoo                            3100          7900
+       24000
+
+Steven               King                           24000          3100
+        3600
+
+Renske               Ladwig                          3600         24000
+        4400
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Jennifer             Whalen                          4400          3600
+        3500
+
+Trenna               Rajs                            3500          4400
+        4200
+
+Nandita              Sarchand                        4200          3500
+       10000
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Janette              King                           10000          4200
+        4000
+
+Sarah                Bell                            4000         10000
+       13000
+
+Michael              Martinez                       13000          4000
+        9500
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Patrick              Sully                           9500         13000
+       11000
+
+Ellen                Abel                           11000          9500
+        3300
+
+Jason                Mallin                          3300         11000
+        8000
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Matthew              Weiss                           8000          3300
+        9000
+
+Allan                McEwen                          9000          8000
+       14000
+
+John                 Singh                          14000          9000
+       13500
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Karen                Partners                       13500         14000
+        3100
+
+Curtis               Davies                          3100         13500
+       10000
+
+Sean                 Tucker                         10000          3100
+        2500
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+James                Marlow                          2500         10000
+        4100
+
+Alexis               Bull                            4100          2500
+        3900
+
+Britney              Everett                         3900          4100
+       12000
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Alberto              Errazuriz                      12000          3900
+        8000
+
+Lindsey              Smith                           8000         12000
+       11500
+
+Lisa                 Ozer                           11500          8000
+        8800
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Alyssa               Hutton                          8800         11500
+        9500
+
+David                Bernstein                       9500          8800
+        8200
+
+Adam                 Fripp                           8200          9500
+        3800
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Kelly                Chung                           3800          8200
+        4800
+
+David                Williams                        4800          3800
+        3200
+
+Julia                Nayer                           3200          4800
+        2800
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Sigal                Tobias                          2800          3200
+        3600
+
+Jennifer             Dilly                           3600          2800
+        6000
+
+Pat                  Davis                           6000          3600
+        9000
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Peter                Hall                            9000          6000
+        3300
+
+Laura                Bissot                          3300          9000
+       17000
+
+Neena                Yang                           17000          3300
+        8200
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+John                 Chen                            8200         17000
+        7700
+
+Ismael               Sciarra                         7700          8200
+        6500
+
+Shanta               Vollman                         6500          7700
+        3200
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Stephen              Stiles                          3200          6500
+        2800
+
+Mozhe                Atkinson                        2800          3200
+       10500
+
+Clara                Vishney                        10500          2800
+        7500
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Louise               Doran                           7500         10500
+        2900
+
+Shelli               Baida                           2900          7500
+        9000
+
+Alexander            James                           9000          2900
+        9600
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Tayler               Fox                             9600          9000
+        3200
+
+Winston              Taylor                          3200          9600
+        4800
+
+Valli                Jackson                         4800          3200
+        2700
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+John                 Seo                             2700          4800
+        3100
+
+Jean                 Fleaur                          3100          2700
+        7800
+
+Jose Manuel          Urman                           7800          3100
+        2600
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Randall              Matos                           2600          7800
+       10000
+
+Harrison             Bloom                          10000          2600
+        8600
+
+Jonathon             Taylor                          8600         10000
+        8000
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Christopher          Olsen                           8000          8600
+        2500
+
+Joshua               Patel                           2500          8000
+        8400
+
+Jack                 Livingston                      8400          2500
+        3100
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Alana                Walsh                           3100          8400
+        3000
+
+Kevin                Feeney                          3000          3100
+        3400
+
+Julia                Dellinger                       3400          3000
+        3200
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Samuel               McLeod                          3200          3400
+        2500
+
+Peter                Vargas                          2500          3200
+        2900
+
+Timothy              Venzl                           2900          2500
+        2900
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Michael              Rogers                          2900          2900
+        2700
+
+Irene                Mikkilineni                     2700          2900
+        7000
+
+Sarath               Sewall                          7000          2700
+        2600
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Guy                  Himuro                          2600          7000
+        7500
+
+Nanette              Cambrault                       7500          2600
+        2400
+
+James                Landry                          2400          7500
+        3000
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Anthony              Cabrio                          3000          2400
+        4200
+
+Diana                Nguyen                          4200          3000
+        7400
+
+William              Smith                           7400          4200
+        2800
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Vance                Jones                           2800          7400
+        9500
+
+Danielle             Greene                          9500          2800
+        7300
+
+Elizabeth            Bates                           7300          9500
+        6000
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Bruce                Miller                          6000          7300
+        7000
+
+Kimberely            Grant                           7000          6000
+        2500
+
+Martha               Sullivan                        2500          7000
+        2600
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Donald               OConnell                        2600          2500
+        2500
+
+Karen                Colmenares                      2500          2600
+       11000
+
+Gerald               Cambrault                      11000          2500
+        5800
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Kevin                Mourgos                         5800         11000
+        7000
+
+Oliver               Tuvault                         7000          5800
+        6900
+
+Luis                 Popp                            6900          7000
+        2400
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Ki                   Gee                             2400          6900
+        2500
+
+Randall              Perkins                         2500          2400
+        6200
+
+Charles              Johnson                         6200          2500
+        2600
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Douglas              Grant                           2600          6200
+        7200
+
+Mattea               Marvins                         7200          2600
+       10500
+
+Eleni                Zlotkey                        10500          7200
+        2800
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Girard               Geoni                           2800         10500
+        2200
+
+Hazel                Philtanker                      2200          2800
+        6800
+
+David                Lee                             6800          2200
+        2200
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Steven               Markle                          2200          6800
+        6400
+
+Sundar               Ande                            6400          2200
+        6200
+
+Amit                 Banda                           6200          6400
+        6100
+
+
+FIRST_NAME           LAST_NAME                     SALARY SALARY_BEFORE
+-------------------- ------------------------- ---------- -------------
+SALARY_AFTER
+------------
+Sundita              Kumar                           6100          6200
+           0
+
+
+106 rows selected.
+
+SQL>
